@@ -1,0 +1,28 @@
+{
+  "name": "hyperapp-starter",
+  "version": "0.1.0",
+  "description": "Minimal Hyperapp starter, with TypeScript",
+  "main": "index.ts",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build --experimental-scope-hoisting src/index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hyperapp",
+    "typescript",
+    "parcel"
+  ],
+  "author": "https://github.com/anticrisis",
+  "license": "MIT",
+  "dependencies": {
+    "hyperapp": "latest",
+    "@hyperapp/time": "latest",
+    "@hyperapp/http": "latest",
+    "@hyperapp/events": "latest"
+  },
+  "devDependencies": {
+    "typescript": "latest",
+    "parcel-bundler": "latest"
+  }
+}

@@ -4,7 +4,23 @@ import { State } from './state'
 // Wraps an action to process a response from server
 const handler = (action: (s: State, data: object) => any) =>
     (state: State, response: any) => {
+
+        // for error handling, capture the error and set connected state to
+        // false
+        const err = (s: State, e: Error): State =>
+            ({
+                ...s, connectionStatus: {
+                    ...s.connectionStatus,
+                    connectionError: e,
+                    connected: false
+                }
+            })
+
         try {
+            // check for error
+            if (response instanceof Error)
+                return err(state, response)
+
             // For example, parse the JSON response here
             // const res = JSON.parse(response);
 
@@ -21,13 +37,8 @@ const handler = (action: (s: State, data: object) => any) =>
             }
             return action(state_, res)
         }
-        catch (err) {
-            const state_ = {
-                ...state, connectionStatus: {
-                    ...state.connectionStatus, connectionError: err
-                }
-            }
-            return action(state_, {});
+        catch (e) {
+            return action(err(state, e), {})
         }
     }
 

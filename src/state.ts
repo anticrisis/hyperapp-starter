@@ -1,7 +1,7 @@
 export interface ConnectionStatus {
     connected: boolean
     lastHeartbeat?: Date
-    connectionError?: string
+    connectionError?: Error
 }
 
 export interface State {

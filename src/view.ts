@@ -46,10 +46,10 @@ export const handlePopState = (s: State, path: string) => {
             break
         case "/form":
             view = form
-            break;
+            break
         default:
             view = main;
-            break;
+            break
     }
 
     return { ...s, currentView: view }

@@ -5,7 +5,7 @@ import { PopState } from './events'
 import { main, handlePopState } from './view'
 import { heartbeat, sendRequest } from './server';
 
-// initial state value
+// initial state value - set desired view based on incoming pathname
 const init: State = handlePopState({ ...initialState() }, window.location.pathname)
 
 // view function, dispatches to current_view
@@ -22,6 +22,8 @@ const subscriptions = (s: State) => {
     return [
         interval(subUpdate, { delay: 1000 }),
         interval(subHeartbeat, { delay: 5000 }),
+
+        // this handles user clicks on back/forward button
         PopState({ action: handlePopState }),
     ]
 }

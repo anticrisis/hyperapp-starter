@@ -33,12 +33,6 @@ use it with my own data structures. Hyperapp does not currently provide
 Typescript type definitions, and the `hyperapp.d.ts` file in this project is
 just enough to get rid of red squiggles while editing.
 
-It's easy enough to modify this sample to get rid of Typescript. Just remove
-Typescript from `package.json`, rename the `.ts` files to `.js`, and remove the
-handful of type declarations which appear next to various parameters, which
-mainly look like `: State`, as in `(s: State)`. And, remove the interface
-declarations in `state.ts`
-
 ## License
 
 MIT

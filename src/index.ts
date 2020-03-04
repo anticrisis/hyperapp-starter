@@ -1,11 +1,12 @@
 import { h, app } from 'hyperapp'
 import { interval } from '@hyperapp/time'
 import { State, initialState } from './state'
-import { main } from './view'
+import { PopState } from './events'
+import { main, handlePopState } from './view'
 import { heartbeat, sendRequest } from './server';
 
 // initial state value
-const init: State = { ...initialState(), currentView: main }
+const init: State = handlePopState({ ...initialState() }, window.location.pathname)
 
 // view function, dispatches to current_view
 const view = (s: State) => s.currentView(s);
@@ -17,10 +18,13 @@ const subUpdate = (s: State, d: number) =>
 const subHeartbeat = (s: State) =>
     [s, sendRequest(s, 'heartbeat', {}, heartbeat)]
 
-const subscriptions = (s: State) => [
-    interval(subUpdate, { delay: 1000 }),
-    interval(subHeartbeat, { delay: 5000 })
-]
+const subscriptions = (s: State) => {
+    return [
+        interval(subUpdate, { delay: 1000 }),
+        interval(subHeartbeat, { delay: 5000 }),
+        PopState({ action: handlePopState }),
+    ]
+}
 
 app({
     init: init,

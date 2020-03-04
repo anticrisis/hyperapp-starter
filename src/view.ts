@@ -3,22 +3,65 @@ import { State } from './state'
 import { sendRequest } from './server'
 import { preventDefault, stopPropagation } from '@hyperapp/events'
 
+
 // An action to handle a response from backend api
 const gotStatus = (s: State, res: object) => {
     console.log("got status: " + JSON.stringify(res))
     return s
 }
 
+// An action for user-triggered backend api request
 const getStatus = (s: State) => [
     s, sendRequest(s, 'status', {}, gotStatus)
 ]
 
+// ---
+// Routing
+// ---
+
+// When user clicks on a button to change view, push the state to window via
+// History API
+const changeView = (s: State, view: (s: State) => any, path: string): (s: State) => any =>
+    ((s: State) => {
+        console.log("pushState")
+        window.history.pushState({}, "", path)
+        return { ...s, currentView: view }
+    })
+
+// Handle user clicking back/forward button, which triggers the popState event
+export const handlePopState = (s: State, path: string) => {
+    // map the desired path to a view function
+    var view = null;
+
+    // trim trailing / if any
+    if (path.endsWith("/")) {
+        path = path.substring(0, path.length - 1)
+    }
+
+    switch (path) {
+        case "/":
+            view = main;
+            break
+        case "/connection":
+            view = connection
+            break
+        case "/form":
+            view = form
+            break;
+        default:
+            view = main;
+            break;
+    }
+
+    return { ...s, currentView: view }
+}
+
 // The navigation menu
-const mainMenu = (s: State) =>
+const mainMenu = (s: State): any =>
     h("div", { id: "menu" }, [
-        h("button", { onclick: (s: State) => ({ ...s, currentView: main }) }, "home"),
-        h("button", { onclick: (s: State) => ({ ...s, currentView: connection }) }, "connection"),
-        h("button", { onclick: (s: State) => ({ ...s, currentView: form }) }, "form")
+        h("button", { onclick: changeView(s, main, "/") }, "home"),
+        h("button", { onclick: changeView(s, connection, "/connection") }, "connection"),
+        h("button", { onclick: changeView(s, form, "/form") }, "form"),
     ])
 
 // The connection screen

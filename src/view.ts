@@ -23,7 +23,6 @@ const getStatus = (s: State) => [
 // History API
 const changeView = (s: State, view: (s: State) => any, path: string): (s: State) => any =>
     ((s: State) => {
-        console.log("pushState")
         window.history.pushState({}, "", path)
         return { ...s, currentView: view }
     })

@@ -16,10 +16,10 @@
   "author": "https://github.com/anticrisis",
   "license": "MIT",
   "dependencies": {
-    "hyperapp": "latest",
-    "@hyperapp/time": "latest",
-    "@hyperapp/http": "latest",
-    "@hyperapp/events": "latest"
+    "hyperapp": "2.0.4",
+    "@hyperapp/time": "0.0.10",
+    "@hyperapp/http": "0.0.2",
+    "@hyperapp/events": "0.0.4"
   },
   "devDependencies": {
     "typescript": "latest",

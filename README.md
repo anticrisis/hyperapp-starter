@@ -8,6 +8,9 @@ Also demonstrates accessing an HTTP API.
 
 ## Usage
 
+**NOTE**: Only works with Hyperapp v2.0.4. See [this
+issue](https://github.com/jorgebucaran/hyperapp/issues/966).
+
 Install dependencies, including Typescript and Parcel:
 
 ```
